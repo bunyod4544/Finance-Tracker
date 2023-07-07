@@ -1,10 +1,10 @@
 package uz.ba.finance.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.stereotype.Repository;
-import uz.ba.finance.dto.operation.AmountDTO;
 import uz.ba.finance.entity.Operation;
 
 import javax.persistence.TemporalType;
@@ -17,14 +17,9 @@ import java.util.List;
 
 
 @Repository
-public interface OperationRepository extends JpaRepository<Operation, Long> {
+public interface OperationRepository extends JpaRepository<Operation, Long>, JpaSpecificationExecutor<Operation> {
 
-//    @Query(nativeQuery = true,
-//            value = "SELECT operation_type AS operationType, SUM(amount) AS totalAmount " +
-//                    "FROM operations " +
-//                    "WHERE creation_date BETWEEN :startDate AND :endDate " +
-//                    "GROUP BY operation_type")
-//    List<AmountDTO> getOperationsBetweenDatesGroupByOperationType(@Temporal(TemporalType.TIMESTAMP) LocalDateTime startDateTime,
-//                                                                  @Temporal(TemporalType.TIMESTAMP) LocalDateTime endDateTime);
+    List<Operation> findOperationByCreationDateBetween(@Temporal(TemporalType.TIMESTAMP) LocalDateTime startDateTime,
+                                                                  @Temporal(TemporalType.TIMESTAMP) LocalDateTime endDateTime);
 
 }

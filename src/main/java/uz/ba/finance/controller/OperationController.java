@@ -9,6 +9,9 @@ import uz.ba.finance.dto.operation.OperationDTO;
 import uz.ba.finance.response.ResponseData;
 import uz.ba.finance.service.OperationService;
 
+import javax.validation.Valid;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/operation")
@@ -21,9 +24,9 @@ public class OperationController {
         return ResponseData.ok(service.create(dto));
     }
 
-//    @GetMapping("/betweenTwoDates")
-//    public ResponseEntity<ResponseData<List<Map<String, Object>>>> period (@Valid @RequestBody PeriodDTO dto){
-//        return ResponseData.ok(service.betweenTwoDates(dto));
-//    }
+    @GetMapping("/betweenTwoDates")
+    public ResponseEntity<ResponseData<Map<String, Long>>> period (@Valid @RequestBody PeriodDTO dto){
+        return ResponseData.ok(service.betweenTwoDates(dto));
+    }
 
 }

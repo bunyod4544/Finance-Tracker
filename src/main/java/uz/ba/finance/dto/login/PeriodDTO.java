@@ -18,7 +18,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PeriodDTO {
 
+    @NotBlank(message = "Start date cannot be empty")
     private LocalDate startDate;
+
     @NotBlank(message = "End date cannot be empty")
     private LocalDate endDate;
 
