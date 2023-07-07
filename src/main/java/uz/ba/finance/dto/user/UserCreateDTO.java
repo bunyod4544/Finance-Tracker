@@ -11,15 +11,15 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserCreateDto {
+public class UserCreateDTO {
 
-    @NotBlank
+    @NotBlank(message = "Name should not be empty")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "Username should not be empty")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "Password should not be empty")
     private String password;
 
 }

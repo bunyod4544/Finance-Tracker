@@ -5,5 +5,5 @@ package uz.ba.finance.enums;
  */
 
 public enum TransactionType {
-    DEBET, KREDIT
+    DEBIT, CREDIT
 }
