@@ -31,8 +31,20 @@ public class OperationService {
     public final OperationSpecification specification;
 
     public OperationDTO create(OperationCreateDTO dto) {
-        Operation operation = mapper.toEntity(dto);
-        return mapper.fromEntity(repository.save(operation));
+        Operation operation = Operation.builder()
+                .description(dto.getDescription())
+                .type(dto.getType())
+                .amount(dto.getAmount())
+                .category(dto.getCategory())
+                .build();
+        Operation saved = repository.save(operation);
+
+        return OperationDTO.builder()
+                .description(saved.getDescription())
+                .amount(saved.getAmount())
+                .category(saved.getCategory())
+                .type(saved.getType())
+                .build();
     }
 
     public Map<String, Long> betweenTwoDates(PeriodDTO dto) {

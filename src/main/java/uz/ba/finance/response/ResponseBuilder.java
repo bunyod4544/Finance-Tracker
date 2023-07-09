@@ -5,11 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-/**
- * @author Doston Bokhodirov | 09.05.2023 09:34
- */
-
-
 @Component("customResponseBuilder")
 @RequiredArgsConstructor
 public class ResponseBuilder {

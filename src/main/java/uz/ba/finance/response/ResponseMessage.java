@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * @author Doston Bokhodirov | 09.05.2023 21:50
- */
 
 @Getter
 @Setter

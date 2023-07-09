@@ -1,9 +1,6 @@
 package uz.ba.finance.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import uz.ba.finance.enums.Category;
 import uz.ba.finance.enums.TransactionType;
@@ -20,11 +17,9 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "operation", schema = "public")
-public class Operation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Operation extends AbstractEntity {
 
     @CreationTimestamp
     @Column(name = "created_date", nullable = false, updatable = false)

@@ -5,10 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uz.ba.finance.enums.UserRole;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Bunyod on 04 июль 2023 at 23:05
@@ -20,11 +25,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", schema = "public")
-public class User implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractEntity implements UserDetails {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -35,9 +36,13 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role = UserRole.UNKNOWN;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return new HashSet<>(Set.of(new SimpleGrantedAuthority(role.name())));
     }
 
     @Override
