@@ -16,7 +16,7 @@ import uz.ba.finance.entity.User;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL
 )
 @Component
-public abstract class UserMapper{
+public abstract class UserMapper {
 
     protected PasswordEncoder passwordEncoder;
 

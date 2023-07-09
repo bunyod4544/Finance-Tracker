@@ -22,17 +22,17 @@ public class OperationController {
     private final OperationService service;
 
     @PostMapping
-    public ResponseEntity<ResponseData<OperationDTO>> create (@RequestBody OperationCreateDTO dto){
+    public ResponseEntity<ResponseData<OperationDTO>> create(@RequestBody OperationCreateDTO dto) {
         return ResponseData.ok(service.create(dto));
     }
 
-    @GetMapping("/betweenTwoDates")
-    public ResponseEntity<ResponseData<Map<String, Long>>> period (@Valid @RequestBody PeriodDTO dto){
+    @GetMapping("/between-dates")
+    public ResponseEntity<ResponseData<Map<String, Long>>> period(@Valid @RequestBody PeriodDTO dto) {
         return ResponseData.ok(service.betweenTwoDates(dto));
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<ResponseData<List<OperationDTO>>> getAll (@Valid @RequestBody OperationCriteria criteria){
+    @GetMapping("/all")
+    public ResponseEntity<ResponseData<List<OperationDTO>>> getAll(@Valid @RequestBody OperationCriteria criteria) {
         return ResponseData.ok(service.getAll(criteria));
     }
 

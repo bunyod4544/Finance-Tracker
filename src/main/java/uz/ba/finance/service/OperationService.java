@@ -31,34 +31,20 @@ public class OperationService {
     public final OperationSpecification specification;
 
     public OperationDTO create(OperationCreateDTO dto) {
-        Operation operation = Operation.builder()
-                .description(dto.getDescription())
-                .type(dto.getType())
-                .amount(dto.getAmount())
-                .category(dto.getCategory())
-                .build();
-        Operation saved = repository.save(operation);
-
-        return OperationDTO.builder()
-                .description(saved.getDescription())
-                .amount(saved.getAmount())
-                .category(saved.getCategory())
-                .type(saved.getType())
-                .build();
+        Operation operation = mapper.toEntity(dto);
+        repository.save(operation);
+        return mapper.fromEntity(operation);
     }
 
     public Map<String, Long> betweenTwoDates(PeriodDTO dto) {
-        Map<String, Long> map = new HashMap<>();
         LocalDateTime endDateTime = LocalDateTime.of(dto.getEndDate(), LocalTime.MAX);
         LocalDateTime startDateTime = LocalDateTime.of(dto.getStartDate(), LocalTime.MIN);
-        List<Operation> operations = repository.findOperationByCreationDateBetween(startDateTime, endDateTime);
+        List<Operation> operations = repository.findAllByCreationDateBetween(startDateTime, endDateTime);
 
-        List<Long> credits = operations.stream().filter(s -> s.getType().name().equals(TransactionType.CREDIT.name())).map(s -> s.getAmount()).toList();
-        List<Long> debits = operations.stream().filter(s -> s.getType().name().equals(TransactionType.DEBIT.name())).map(s -> s.getAmount()).toList();
+        List<Long> credits = getByTransactionType(operations, TransactionType.CREDIT);
+        List<Long> debits = getByTransactionType(operations, TransactionType.DEBIT);
 
-        map.put("CREDIT", credits.stream().mapToLong(Long::longValue).sum());
-        map.put("DEBIT", debits.stream().mapToLong(Long::longValue).sum());
-        return map;
+        return Map.of("CREDIT", getSum(credits), "DEBIT", getSum(debits));
     }
 
     public List<OperationDTO> getAll(OperationCriteria criteria) {
@@ -66,6 +52,17 @@ public class OperationService {
                 .stream()
                 .map(mapper::fromEntity)
                 .toList();
+    }
+
+    private List<Long> getByTransactionType(List<Operation> operations, TransactionType transactionType) {
+        return operations.stream()
+                .filter(operation -> operation.getType() == transactionType)
+                .map(Operation::getAmount)
+                .toList();
+    }
+
+    private long getSum(List<Long> credits) {
+        return credits.stream().mapToLong(Long::longValue).sum();
     }
 
 }
