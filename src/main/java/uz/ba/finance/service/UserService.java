@@ -1,6 +1,6 @@
 package uz.ba.finance.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.ba.finance.dto.login.LoginDTO;
 import uz.ba.finance.dto.login.SessionDTO;
@@ -26,21 +25,25 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService  implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final UserMapper mapper;
     private final UserRepository repository;
     private final AuthenticationManager authManager;
 
-    @Autowired
-    public UserService(UserMapper mapper, UserRepository repository, AuthenticationManager authManager) {
+    public UserService(
+            UserMapper mapper,
+            UserRepository repository,
+            @Lazy AuthenticationManager authManager
+    ) {
         this.mapper = mapper;
         this.repository = repository;
         this.authManager = authManager;
     }
 
+
     public UserDTO register(UserCreateDTO dto) {
-        if(repository.existsAllByUsername(dto.getUsername())){
+        if (repository.existsByUsername(dto.getUsername())) {
             throw new BadRequestException("User with this username already exists!");
         }
         User user = mapper.toEntity(dto);
@@ -48,7 +51,8 @@ public class UserService  implements UserDetailsService {
     }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Bad credentials!"));
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Bad credentials!"));
     }
 
 

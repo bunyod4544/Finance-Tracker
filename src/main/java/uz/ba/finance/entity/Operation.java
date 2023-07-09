@@ -1,6 +1,9 @@
 package uz.ba.finance.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import uz.ba.finance.enums.Category;
 import uz.ba.finance.enums.TransactionType;
@@ -17,7 +20,6 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "operation", schema = "public")
 public class Operation extends AbstractEntity {
 
@@ -38,4 +40,12 @@ public class Operation extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", nullable = false)
     private TransactionType type;
+
+    public boolean isDebit() {
+        return this.type == TransactionType.DEBIT;
+    }
+
+    public boolean isCredit() {
+        return this.type == TransactionType.CREDIT;
+    }
 }

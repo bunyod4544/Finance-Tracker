@@ -1,7 +1,7 @@
 package uz.ba.finance.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import uz.ba.finance.criteria.OperationCriteria;
 import uz.ba.finance.entity.Operation;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
  * @author Bunyod on 07 июль 2023 at 11:18
  */
 
-@Service
+@Component
 public class OperationSpecification {
     public Specification<Operation> getSpecification(OperationCriteria criteria) {
         return typeSpecification(criteria.getType())
@@ -38,8 +38,6 @@ public class OperationSpecification {
                 .map(i -> criteriaBuilder.equal(root.get("creationDate"), i))
                 .orElse(null);
     }
-
-
 
     public static String likeFormat(String value) {
         return MessageFormat.format("%{0}%", value);

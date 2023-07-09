@@ -27,20 +27,10 @@ public class ResponseError {
         this.reason = reason;
     }
 
-    private ResponseError(String message, String reason, String path) {
-        this(message, reason);
-        this.path = path;
-    }
-
     public ResponseError(String message, String reason, @Nullable HttpServletRequest request) {
         this(message, reason);
         if (Objects.nonNull(request)) this.path = request.getRequestURI();
     }
-
-    public static ResponseError response(String message) {
-        return response(message, null);
-    }
-
 
     public static ResponseError response(String message, String reason) {
         return response(message, reason, null);

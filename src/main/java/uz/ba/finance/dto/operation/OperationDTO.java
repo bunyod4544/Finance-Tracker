@@ -1,5 +1,6 @@
 package uz.ba.finance.dto.operation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import uz.ba.finance.enums.Category;
 import uz.ba.finance.enums.TransactionType;
@@ -10,9 +11,10 @@ import uz.ba.finance.enums.TransactionType;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OperationDTO {
 
     private String description;

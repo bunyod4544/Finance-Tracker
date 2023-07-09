@@ -2,7 +2,6 @@ package uz.ba.finance.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
-import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 import uz.ba.finance.dto.operation.OperationCreateDTO;
 import uz.ba.finance.dto.operation.OperationDTO;
@@ -15,8 +14,7 @@ import uz.ba.finance.entity.Operation;
 @Mapper(
         componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL,
-        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL
+        nullValueMappingStrategy = NullValueMappingStrategy.RETURN_NULL
 )
 public interface OperationMapper {
 

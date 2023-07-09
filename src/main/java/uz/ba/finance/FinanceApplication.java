@@ -1,27 +1,15 @@
 package uz.ba.finance;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import uz.ba.finance.dto.user.UserCreateDTO;
-import uz.ba.finance.service.UserService;
 
+@OpenAPIDefinition
 @SpringBootApplication
-@RequiredArgsConstructor
-public class FinanceApplication implements CommandLineRunner {
-
-    private final UserService userService;
+public class FinanceApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinanceApplication.class, args);
     }
 
-    public void run(String... args) {
-        userService.register(new UserCreateDTO(
-                "Bunyod",
-                "bunyod",
-                "bunyod"
-        ));
-    }
 }

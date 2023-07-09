@@ -23,39 +23,18 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ResponseData<Object>> handleNotFoundException(final NotFoundException ex, HttpServletRequest request) {
-        return getResponseEntity(ex, request, HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<?> handleUserNameNotFoundException(final UsernameNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseData<Object>> handleUserNameNotFoundException(final UsernameNotFoundException ex, HttpServletRequest request) {
         return getResponseEntity(ex, request, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleBadRequestException(final BadRequestException ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseData<Object>> handleBadRequestException(final BadRequestException ex, HttpServletRequest request) {
         return getResponseEntity(ex, request, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(CommonFileException.class)
-    public ResponseEntity<?> handleCommonFileException(final CommonFileException ex, HttpServletRequest request) {
-        return getResponseEntity(ex, request, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(CustomFirebaseException.class)
-    public ResponseEntity<?> handleCustomFirebaseException(final CustomFirebaseException ex, HttpServletRequest request) {
-        return getResponseEntity(ex, request, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDeniedException(final AccessDeniedException ex, HttpServletRequest request) {
-        return getResponseEntity(ex, request, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handle(final Exception ex, HttpServletRequest request) {
+    public ResponseEntity<ResponseData<Object>> handle(final Exception ex, HttpServletRequest request) {
         return getResponseEntity(ex, request, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
