@@ -14,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JwtTokenUtils {
     private static final long EXPIRE_DURATION = 24L * 60L * 60L * 1000L; // 24 hour
-    private static final String SECRET_KEY = "under_50_drug";
+    private static final String SECRET_KEY = "finance_tracker";
 
     public static String generateToken(String username, Set<String> authorities) {
         return Jwts.builder()
